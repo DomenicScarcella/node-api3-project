@@ -27,18 +27,22 @@ const validateUserId = async (req, res, next) => {
 
 const validateUser = (req, res, next) => {
   // DO YOUR MAGIC
-  if(!req.body || !req.body.name) {
+  const { name } = req.body;
+  if(!name || !name.trim()) {
     res.status(400).json({message: 'missing required name field'});
   } else {
+    req.name = name.trim()
     next()
   }
 };
 
 const validatePost = (req, res, next) => {
   // DO YOUR MAGIC
-  if(!req.body || !req.body.text) {
+  const { text } = req.body;
+  if(!text || !text.trim()) {
     res.status(400).json({message: 'missing required text field'});
   } else {
+    req.text = text.trim()
     next()
   }
 }
