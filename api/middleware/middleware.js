@@ -1,17 +1,19 @@
-const Posts = require('../posts/posts-model.js');
-const Users = require('../users/users-model.js');
+const Post = require('../posts/posts-model.js');
+const User = require('../users/users-model.js');
 
 const logger = (req, res, next) => {
   // DO YOUR MAGIC
-  console.log(req.method, req.url, Date.now());
+  const timestamp = new Date().toLocaleString();
+  const method = req.method;
+  const url = req.originalUrl;
+  console.log(`[${timestamp}] ${method} to ${url}`);
   next();
 }
 
 const validateUserId = async (req, res, next) => {
   // DO YOUR MAGIC
-  const { id } = req.params;
   try {
-    const user = await Users.getById(id);
+    const user = await User.getById(req.params.id);
     if(!user) {
       res.status(404).json({message: 'user not found'});
     } else {
